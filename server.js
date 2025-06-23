@@ -10,7 +10,12 @@ const app = express();
 const port = process.env.PORT || 8666;
 
 // Sử dụng CORS middleware để cho phép ReactJS gọi từ cổng khác
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://lucky68.cc"],
+    credentials: true,
+  })
+);
 
 app.use(express.json()); // Để parse JSON body từ ReactJS
 
