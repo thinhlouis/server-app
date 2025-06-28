@@ -12,7 +12,6 @@ quotesRouter.get("/all-quote", async (req, res) => {
   try {
     const quotes = await getDataFromMongoDB(db.quotes);
 
-    console.log(totalQuote);
     res.status(200).json(quotes);
   } catch (error) {
     res.status(400).json({
