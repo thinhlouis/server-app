@@ -16,6 +16,7 @@ async function connectDB() {
     const database = client.db(dbName);
 
     db.users = database.collection("users");
+    db.quotes = database.collection("quotes");
     db.videos = database.collection("videos");
     db.videos_real = database.collection("videos_real");
   } catch (err) {
