@@ -31,7 +31,7 @@ authenticateRouter.post("/sig-in", async (req, res) => {
     const SECRET_KEY = process.env.SECRET_KEY;
 
     const token = jwt.sign(existingUser, SECRET_KEY, {
-      expiresIn: "7d",
+      expiresIn: "1h",
     });
 
     res.json({
@@ -156,12 +156,12 @@ authenticateRouter.put("/update", authenticateRole, async (req, res) => {
 
   if (!_id || !req.body) {
     // Nếu không có chuỗi tìm kiếm, trả về lỗi 400 Bad Request
-    console.log(_id);
+
     return res.status(400).json({ message: "Data field error" });
   }
 
   try {
-    const updateOptions = checkFieldsNeedUpdated(req.body);
+    const updateOptions = await checkFieldsNeedUpdated(req.body);
 
     const result = await db.users.updateOne(
       { _id: new ObjectId(String(_id)) },

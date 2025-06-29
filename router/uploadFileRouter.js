@@ -7,16 +7,19 @@ const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 const ffmpeg = require("fluent-ffmpeg");
 ffmpeg.setFfmpegPath(ffmpegPath);
 const { v4: uuidv4 } = require("uuid");
-// ffmpeg.setFfmpegPath("C:\\ffmpeg-7.1.1\\bin\\ffmpeg.exe");
 
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const { db } = require("../utils/conect.mongo"); // Giả sử bạn vẫn cần MongoDB
 const authenticateRole = require("../middleware/authenticateRole");
-const { create } = require("domain");
 
 const uploadFileRouter = express.Router();
-const upload = multer({ dest: "temp/" });
+const upload = multer({
+  dest: "temp/",
+  limits: {
+    fileSize: 500 * 1024 * 1024,
+  },
+});
 
 // Cấu hình kết nối R2
 const s3 = new S3Client({
