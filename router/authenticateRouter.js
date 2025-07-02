@@ -64,7 +64,7 @@ authenticateRouter.post("/sig-in", async (req, res) => {
 });
 
 authenticateRouter.post("/sig-up", authenticateRole, async (req, res) => {
-  const { username, password, security_code, role } = req.body;
+  const { username, email, password, security_code, role } = req.body;
 
   if (!username || !password || !security_code || !role) {
     return res.status(400).json({
@@ -88,6 +88,7 @@ authenticateRouter.post("/sig-up", authenticateRole, async (req, res) => {
       createdAt: new Date(),
       userId: uuidv4(),
       username,
+      email,
       role,
       security_code,
       password: hashedPassword,
