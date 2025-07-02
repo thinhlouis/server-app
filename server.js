@@ -12,13 +12,7 @@ const port = process.env.PORT || 5000;
 // Sử dụng CORS middleware để cho phép ReactJS gọi từ cổng khác
 app.use(
   cors({
-    origin: [
-      "https://ksc88.net/",
-      "https://ksc88.net",
-      "http://ksc88.net",
-      "http://localhost:3000",
-      "http://192.168.1.237:3000",
-    ],
+    origin: ["https://ksc88.net"],
     credentials: true,
   })
 );
