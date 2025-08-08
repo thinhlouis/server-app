@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
+const { db } = require("../utils/conect.mongo");
+const { ObjectId } = require("mongodb");
 
-const authenticateToken = (req, res, next) => {
+const authenticateToken = async (req, res, next) => {
   const token = req.headers["x-access-token"];
 
   if (!token) {
@@ -11,7 +13,16 @@ const authenticateToken = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
-    req.users = decoded;
+    const user = await db.users.findOne({
+      _id: new ObjectId(String(decoded._id)),
+    });
+
+    if (!user || user.tokenVersion !== decoded.tokenVersion) {
+      return res.status(401).json({
+        message: "Token invalid or outdated!",
+      });
+    }
+    req.users = user;
 
     next();
   } catch (error) {

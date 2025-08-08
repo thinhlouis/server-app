@@ -3,6 +3,7 @@ const express = require("express");
 
 const { connectDB } = require("./utils/conect.mongo");
 const routers = require("./router/index");
+const streamRouter = require("./router/streamRouter");
 
 const cors = require("cors");
 
@@ -21,6 +22,7 @@ app.use(express.json()); // Để parse JSON body từ ReactJS
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1", routers);
+app.use("/stream", streamRouter);
 
 app.get("/", (req, res) => {
   res.status(200).json("Hello My App Server");

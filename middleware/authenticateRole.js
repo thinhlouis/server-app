@@ -21,7 +21,7 @@ const authenticateRole = (req, res, next) => {
     if (decoded.role !== "super_root") {
       return res.status(403).json({
         success: false,
-        message: "You do not have access!",
+        message: "🚫 Unauthorized!",
       });
     }
 

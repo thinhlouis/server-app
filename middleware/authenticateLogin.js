@@ -14,6 +14,10 @@ const authenticateLogin = async (body, data) => {
       throw new Error("Invalid credentials");
     }
 
+    if (!user.status) {
+      throw new Error("Account has been locked");
+    }
+
     // Trả về thông tin cần thiết (không bao gồm password)
     return {
       _id: user._id,
@@ -24,6 +28,9 @@ const authenticateLogin = async (body, data) => {
     console.error("Login error:", error);
 
     if (error.message === "Invalid credentials") {
+      throw error;
+    }
+    if (error.message === "Account has been locked") {
       throw error;
     }
     throw new Error("Authentication failed");
